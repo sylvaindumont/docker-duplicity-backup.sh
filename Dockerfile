@@ -19,9 +19,8 @@ RUN apk add --no-cache --virtual build-deps \
     libffi-dev \
     openssl-dev \
     py-setuptools \
-    py-pip
-
-RUN pip install --trusted-host pypi.python.org \
+    py-pip \
+ && pip install --trusted-host pypi.python.org \
     gsutil \
     s3cmd \
     mega.py \
