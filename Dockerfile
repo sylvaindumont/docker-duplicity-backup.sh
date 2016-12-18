@@ -13,6 +13,7 @@ RUN set -x \
     bash
 
 RUN apk add --no-cache --virtual build-deps \
+    linux-headers \
     build-base \
     python-dev \
     libffi-dev \
