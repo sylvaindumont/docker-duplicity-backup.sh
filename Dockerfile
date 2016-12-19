@@ -40,8 +40,8 @@ RUN apk add --no-cache --virtual build-deps \
     python-swiftclient \
     python-keystoneclient \
  && rm -r ~/.cache/pip \
- && mkdir /home/duplicity/bin
- && echo 'main(){write(1, "OpenBSD\n", 8);}' | gcc -o /home/duplicity/bin/uname -x c -
+ && mkdir /home/duplicity/bin \
+ && echo 'main(){write(1, "OpenBSD\n", 8);}' | gcc -o /home/duplicity/bin/uname -x c - \
  && apk del build-deps
 
 VOLUME ["/home/duplicity/.cache/duplicity", "/home/duplicity/.gnupg"]
