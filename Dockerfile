@@ -12,6 +12,17 @@ RUN set -x \
     mailx \
     bash
 
+    ENV HOME=/home/duplicity
+
+    RUN adduser -D -u 1896 duplicity \
+     && mkdir -p ${HOME}/.cache/duplicity \
+     && mkdir -p ${HOME}/.gnupg \
+     && chmod -R go+rwx ${HOME}/ \
+     && mkdir -p /var/log/duplicity \
+     && chmod -R go+rw /var/log/duplicity/ \
+     && chmod +rx /usr/local/bin/duplicity-backup.sh \
+     && touch ${HOME}/dulicity-backup.conf
+
 RUN apk add --no-cache --virtual build-deps \
     linux-headers \
     build-base \
@@ -27,24 +38,15 @@ RUN apk add --no-cache --virtual build-deps \
     python-swiftclient \
     python-keystoneclient \
  && rm -r ~/.cache/pip \
+ && mkdir /home/duplicity/bin
+ && echo 'main(){write(1, "OpenBSD\n", 8);}' | gcc -o /home/duplicity/bin/uname -x c -
  && apk del build-deps
 
 ADD https://github.com/zertrin/duplicity-backup.sh/raw/dev/duplicity-backup.sh /usr/local/bin/
 
-ENV HOME=/home/duplicity
-
-RUN adduser -D -u 1896 duplicity \
- && mkdir -p ${HOME}/.cache/duplicity \
- && mkdir -p ${HOME}/.gnupg \
- && chmod -R go+rwx ${HOME}/ \
- && mkdir -p /var/log/duplicity \
- && chmod -R go+rw /var/log/duplicity/ \
- && chmod +rx /usr/local/bin/duplicity-backup.sh \
- && touch ${HOME}/dulicity-backup.conf
-
 VOLUME ["/home/duplicity/.cache/duplicity", "/home/duplicity/.gnupg"]
 
 USER duplicity
-ENV ROOT=/data LOGDIR="/var/log/duplicity/" LOG_FILE="duplicity.log" LOG_FILE_OWNER="${USER}:${USER}" STATIC_OPTIONS="--allow-source-mismatch"
+ENV PATH=/home/duplicity/bin/:${PATH} ROOT=/data LOGDIR="/var/log/duplicity/" LOG_FILE="duplicity.log" LOG_FILE_OWNER="${USER}:${USER}" STATIC_OPTIONS="--allow-source-mismatch"
 
 ENTRYPOINT ["/usr/local/bin/duplicity-backup.sh", "-c", "/home/duplicity/dulicity-backup.conf"]

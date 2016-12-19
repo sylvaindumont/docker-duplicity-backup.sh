@@ -1,6 +1,6 @@
 [![](https://images.microbadger.com/badges/image/weboaks/duplicity-backup.sh.svg)](https://microbadger.com/images/weboaks/duplicity-backup.sh "Get your own image badge on microbadger.com")
 
-Dockerized [*duplicity-backup.sh*](https://github.com/zertrin/duplicity-backup.sh) backup tool.
+Dockerized [**duplicity-backup.sh**](https://github.com/zertrin/duplicity-backup.sh) backup tool.
 
 ## Usage
 
