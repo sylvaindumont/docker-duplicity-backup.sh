@@ -45,6 +45,6 @@ RUN adduser -D -u 1896 duplicity \
 VOLUME ["/home/duplicity/.cache/duplicity", "/home/duplicity/.gnupg"]
 
 USER duplicity
-ENV ROOT=/data LOGDIR="/var/log/duplicity/" LOG_FILE="duplicity.log" LOG_FILE_OWNER="${USER}:${USER}"
+ENV ROOT=/data LOGDIR="/var/log/duplicity/" LOG_FILE="duplicity.log" LOG_FILE_OWNER="${USER}:${USER}" STATIC_OPTIONS="--allow-source-mismatch"
 
 ENTRYPOINT ["/usr/local/bin/duplicity-backup.sh", "-c", "/home/duplicity/dulicity-backup.conf"]

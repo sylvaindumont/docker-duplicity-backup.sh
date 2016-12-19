@@ -5,7 +5,7 @@ Dockerized [*duplicity-backup.sh*](https://github.com/zertrin/duplicity-backup.s
 ## Usage
 
 ```
-docker run --rm --user $UID \
+docker run --rm --user $UID --hostname `hostname` \
   -v duplicity-cache:/home/duplicity/.cache/duplicity \
   -v duplicity-gnupg:/home/duplicity/.gnupg \
 ```
@@ -65,7 +65,7 @@ all env variables supported by duplicity-backup.sh are listed in [duplicity-back
 
 duplicity-backup.sh is based on duplicity, you can pass any argument to duplicity via
 ```
--e STATIC_OPTIONS=" --s3-use-new-style"
+-e STATIC_OPTIONS="$STATIC_OPTIONS --s3-use-new-style"
 ```
 
 ### GPG
