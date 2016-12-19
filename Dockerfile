@@ -31,19 +31,22 @@ RUN apk add --no-cache --virtual build-deps \
 
 ADD https://github.com/zertrin/duplicity-backup.sh/raw/dev/duplicity-backup.sh /usr/local/bin/
 
-RUN adduser -D -u 1896 duplicity \
- && mkdir -p /home/duplicity/.cache/duplicity \
- && mkdir -p /home/duplicity/.gnupg \
- && chmod -R go+rwx /home/duplicity/ \
- && chmod +rx /usr/local/bin/duplicity-backup.sh \
- && touch /home/duplicity/dulicity-backup.conf
-
-
 ENV HOME=/home/duplicity
-ENV ROOT=/data
+
+RUN adduser -D -u 1896 duplicity \
+ && mkdir -p ${HOME}/.cache/duplicity \
+ && mkdir -p ${HOME}/.gnupg \
+ && chmod -R go+rwx ${HOME}/ \
+ && chmod +rx /usr/local/bin/duplicity-backup.sh \
+ && touch ${HOME}/dulicity-backup.conf
 
 VOLUME ["/home/duplicity/.cache/duplicity", "/home/duplicity/.gnupg"]
 
 USER duplicity
+ENV ROOT=/data
+ENV LOGDIR="/dev/"
+ENV LOG_FILE="stdout"
+ENV LOG_FILE_OWNER="${USER}:${USER}"
+
 
 ENTRYPOINT ["/usr/local/bin/duplicity-backup.sh", "-c", "/home/duplicity/dulicity-backup.conf"]
