@@ -49,4 +49,6 @@ VOLUME ["/home/duplicity/.cache/duplicity", "/home/duplicity/.gnupg"]
 USER duplicity
 ENV PATH=/home/duplicity/bin/:${PATH} ROOT=/data LOGDIR="/var/log/duplicity/" LOG_FILE="duplicity.log" LOG_FILE_OWNER="${USER}:${USER}" STATIC_OPTIONS="--allow-source-mismatch"
 
-ENTRYPOINT ["/usr/local/bin/duplicity-backup.sh", "-c", "/home/duplicity/dulicity-backup.conf"]
+COPY entrypoint.sh /entrypoint.sh
+
+ENTRYPOINT ["/entrypoint.sh"]
