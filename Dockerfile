@@ -35,7 +35,7 @@ RUN adduser -D -u 1896 duplicity \
  && mkdir -p /home/duplicity/.cache/duplicity \
  && mkdir -p /home/duplicity/.gnupg \
  && chmod -R go+rwx /home/duplicity/ \
- && chmod +x /usr/local/bin/duplicity-backup.sh
+ && chmod +rx /usr/local/bin/duplicity-backup.sh
 
 
 ENV HOME=/home/duplicity
