@@ -35,7 +35,8 @@ RUN adduser -D -u 1896 duplicity \
  && mkdir -p /home/duplicity/.cache/duplicity \
  && mkdir -p /home/duplicity/.gnupg \
  && chmod -R go+rwx /home/duplicity/ \
- && chmod +rx /usr/local/bin/duplicity-backup.sh
+ && chmod +rx /usr/local/bin/duplicity-backup.sh \
+ && touch /home/duplicity/dulicity-backup.conf
 
 
 ENV HOME=/home/duplicity
@@ -45,4 +46,4 @@ VOLUME ["/home/duplicity/.cache/duplicity", "/home/duplicity/.gnupg"]
 
 USER duplicity
 
-ENTRYPOINT ["/usr/local/bin/duplicity-backup.sh"]
+ENTRYPOINT ["/usr/local/bin/duplicity-backup.sh", "-c", "/home/duplicity/dulicity-backup.conf"]
