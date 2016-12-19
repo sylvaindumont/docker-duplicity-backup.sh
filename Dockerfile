@@ -13,6 +13,7 @@ RUN set -x \
     bash
 
 ADD https://github.com/zertrin/duplicity-backup.sh/raw/dev/duplicity-backup.sh /usr/local/bin/
+COPY entrypoint.sh /home/duplicity/entrypoint.sh
 
 ENV HOME=/home/duplicity
 
@@ -23,6 +24,7 @@ RUN adduser -D -u 1896 duplicity \
  && mkdir -p /var/log/duplicity \
  && chmod -R go+rw /var/log/duplicity/ \
  && chmod +rx /usr/local/bin/duplicity-backup.sh \
+ && chmod +rx /home/duplicity/entrypoint.sh \
  && touch ${HOME}/dulicity-backup.conf
 
 RUN apk add --no-cache --virtual build-deps \
@@ -49,6 +51,5 @@ VOLUME ["/home/duplicity/.cache/duplicity", "/home/duplicity/.gnupg"]
 USER duplicity
 ENV PATH=/home/duplicity/bin/:${PATH} ROOT=/data LOGDIR="/var/log/duplicity/" LOG_FILE="duplicity.log" LOG_FILE_OWNER="${USER}:${USER}" STATIC_OPTIONS="--allow-source-mismatch"
 
-COPY entrypoint.sh /home/duplicity/entrypoint.sh
 
 ENTRYPOINT ["/home/duplicity/entrypoint.sh"]
