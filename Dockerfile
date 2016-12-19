@@ -38,7 +38,7 @@ RUN adduser -D -u 1896 duplicity \
  && mkdir -p ${HOME}/.gnupg \
  && chmod -R go+rwx ${HOME}/ \
  && mkdir -p /var/log/duplicity \
- && chmod -R go+rw $/var/log/duplicity/ \
+ && chmod -R go+rw /var/log/duplicity/ \
  && chmod +rx /usr/local/bin/duplicity-backup.sh \
  && touch ${HOME}/dulicity-backup.conf
 
