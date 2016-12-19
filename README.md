@@ -11,19 +11,33 @@ docker run --rm --user $UID \
 ```
 Mount folder to backup
 ```
-  -v /home/backup/:/data:ro \
+  -v /path/to/backup/:/data \
 ```
 Set destination, credentials and other options
 ```
   -e DEST="ftp://user@other.host[:port]/some_dir"
   -e FTP_PASSWORD="password"
 ```
-Pass options to make a backup or restore a backup
+Set backup passphrase
 ```
-  weboaks/duplicity-backup.sh --full
+ -e PASSPHRASE="pass"
+```
+Set retention
+```
+-e CLEAN_UP_TYPE="remove-all-but-n-full"
+-e CLEAN_UP_VARIABLE="4"
 ```
 
-Other options available:
+Pass options to make a backup
+```
+  weboaks/duplicity-backup.sh --backup
+```
+or restore a backup
+```
+  -it weboaks/duplicity-backup.sh --restore /data
+```
+
+### options
 ```
 -b, --backup               runs an incremental backup
 -f, --full                 forces a full backup
@@ -47,6 +61,34 @@ Other options available:
 -d, --debug                echo duplicity commands to logfile
 -V, --version              print version information about this script and duplicity
 ```
+all env variables supported by duplicity-backup.sh are listed in [duplicity-backup.conf.example](https://github.com/zertrin/duplicity-backup.sh/blob/dev/duplicity-backup.conf.example)
+
+duplicity-backup.sh is based on duplicity, you can pass any argument to duplicity via
+```
+-e STATIC_OPTIONS=" --s3-use-new-style"
+```
+
+### GPG
+
+```
+-v /path/to/keys/:/home/duplicity/keys/
+-e GPG_ENC_KEY="/home/duplicity/keys/gpgenc.key"
+-e GPG_SIGN_KEY="/home/duplicity/keys/gpgsign.key"
+-e GPG_OPTIONS="--no-show-photos"
+```
+
+### Data retention
+
+You can remove older than a specific time period:
+```
+-e CLEAN_UP_TYPE="remove-older-than"
+-e CLEAN_UP_VARIABLE="31D"
+```
+Or, If you would rather keep a certain (n) number of full backups (rather than removing the files based on their age), you can use what I use:
+```
+-e CLEAN_UP_TYPE="remove-all-but-n-full"
+-e CLEAN_UP_VARIABLE="4"
+```
 
 ## Configuration
 
@@ -64,7 +106,7 @@ All env variables useful to configure the script can be found in https://github.
 -e DEST="imap[s]://user@other.host[/from_address_prefix]"
 -e DEST="webdav[s]://user@other.host[:port]/some_dir"
 -e DEST="fish://user@other.host[:port]/[relative|/absolute]_path"
--e DEST="mega://user@mega.co.nz/some_dir"
+-e DEST="mega://user@mega.nz/some_dir"
 
 ```
 And specify your password :
@@ -77,6 +119,11 @@ And specify your password :
 -e DEST="s3+http://foobar-backup-bucket/backup-folder/"
 -e AWS_ACCESS_KEY_ID="foobar_aws_key_id"
 -e AWS_SECRET_ACCESS_KEY="foobar_aws_access_key"
+```
+To specify storage class options
+```
+-e STORAGECLASS="--s3-use-ia"
+-e STORAGECLASS="--s3-use-rss"
 ```
 To use *minio* or another s3 compatible storage
 ```
