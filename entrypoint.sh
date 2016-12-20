@@ -11,4 +11,4 @@ secret_key = ${AWS_SECRET_ACCESS_KEY}
 signature_v2 = False
 EOF
 
-/usr/local/bin/duplicity-backup.sh -c /home/duplicity/dulicity-backup.conf $@
+/usr/local/bin/duplicity-backup.sh -c /home/duplicity/dulicity-backup.conf "$@"

@@ -51,4 +51,4 @@ USER duplicity
 ENV ROOT=/data LOGDIR="/var/log/duplicity/" LOG_FILE="duplicity.log" LOG_FILE_OWNER="${USER}:${USER}" STATIC_OPTIONS="--allow-source-mismatch"
 
 
-ENTRYPOINT ["/home/duplicity/entrypoint.sh"]
+ENTRYPOINT ["bash", "/home/duplicity/entrypoint.sh"]
