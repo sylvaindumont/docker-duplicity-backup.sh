@@ -1,5 +1,6 @@
 
 #!/bin/bash
+
 cat <<EOF > /home/duplicity/.s3cfg
 # Setup endpoint
 $([ "$(echo "$DEST" | cut -d'/' -f1)" == "s3:" ] && echo "host_base = $(echo "$DEST" | cut -d'/' -f3)")
@@ -10,5 +11,11 @@ access_key = ${AWS_ACCESS_KEY_ID}
 secret_key = ${AWS_SECRET_ACCESS_KEY}
 signature_v2 = False
 EOF
+
+cat <<EOF > /home/duplicity/bin/uname
+#!/bin/bash
+echo "OpenBSD"
+EOF
+chmod +x /home/duplicity/bin/uname
 
 exec /usr/local/bin/duplicity-backup.sh -c /home/duplicity/dulicity-backup.conf "$@"
