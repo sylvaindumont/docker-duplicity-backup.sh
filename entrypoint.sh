@@ -12,10 +12,4 @@ secret_key = ${AWS_SECRET_ACCESS_KEY}
 signature_v2 = False
 EOF
 
-cat <<EOF > /home/duplicity/bin/uname
-#!/bin/bash
-echo "OpenBSD"
-EOF
-chmod +x /home/duplicity/bin/uname
-
 exec /usr/local/bin/duplicity-backup.sh -c /home/duplicity/dulicity-backup.conf "$@"
