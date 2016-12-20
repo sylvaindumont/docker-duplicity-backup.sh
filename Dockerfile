@@ -43,13 +43,12 @@ RUN apk add --no-cache --virtual build-deps \
     python-swiftclient \
     python-keystoneclient \
  && rm -r ~/.cache/pip \
- && mkdir /home/duplicity/bin \
  && apk del build-deps
 
 VOLUME ["/home/duplicity/.cache/duplicity", "/home/duplicity/.gnupg"]
 
 USER duplicity
-ENV PATH=/home/duplicity/bin/:${PATH} ROOT=/data LOGDIR="/var/log/duplicity/" LOG_FILE="duplicity.log" LOG_FILE_OWNER="${USER}:${USER}" STATIC_OPTIONS="--allow-source-mismatch"
+ENV ROOT=/data LOGDIR="/var/log/duplicity/" LOG_FILE="duplicity.log" LOG_FILE_OWNER="${USER}:${USER}" STATIC_OPTIONS="--allow-source-mismatch"
 
 
 ENTRYPOINT ["/home/duplicity/entrypoint.sh"]
