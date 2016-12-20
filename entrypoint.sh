@@ -1,5 +1,5 @@
 
-#!/usr/bin/env bash
+#!/bin/bash
 cat <<EOF > /home/duplicity/.s3cfg
 # Setup endpoint
 $([ "$(echo "$DEST" | cut -d'/' -f1)" == "s3:" ] && echo "host_base = $(echo "$DEST" | cut -d'/' -f3)")
