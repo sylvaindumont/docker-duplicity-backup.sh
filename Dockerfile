@@ -43,8 +43,9 @@ RUN apk add --no-cache --virtual build-deps \
     python-swiftclient \
     python-keystoneclient \
  && rm -r ~/.cache/pip \
- && apk del build-deps
-
+ && apk del build-deps \
+ && rm /usr/lib/python2.7/site-packages/mega/mega.pyc \
+ && wget -O /usr/lib/python2.7/site-packages/mega/mega.py https://raw.githubusercontent.com/tapionx/mega.py/master/mega/mega.py
 VOLUME ["/home/duplicity/.cache/duplicity", "/home/duplicity/.gnupg"]
 
 USER duplicity
