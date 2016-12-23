@@ -106,7 +106,7 @@ All env variables useful to configure the script can be found in https://github.
 -e DEST="imap[s]://user@other.host[/from_address_prefix]"
 -e DEST="webdav[s]://user@other.host[:port]/some_dir"
 -e DEST="fish://user@other.host[:port]/[relative|/absolute]_path"
--e DEST="mega://user@mega.nz/some_dir"
+-e DEST="mega://user@mega.co.nz/some_dir"
 
 ```
 And specify your password :
