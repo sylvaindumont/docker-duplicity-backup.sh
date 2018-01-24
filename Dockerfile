@@ -37,6 +37,7 @@ RUN apk add --no-cache --virtual build-deps \
     py-setuptools \
     py-pip \
  && pip install --trusted-host pypi.python.org \
+    fasteners \
     gsutil \
     s3cmd \
     mega.py \
