@@ -11,6 +11,7 @@ RUN set -x \
     rsync \
     lftp \
     mailx \
+    curl \
     bash
 
 ADD https://github.com/zertrin/duplicity-backup.sh/raw/dev/duplicity-backup.sh /usr/local/bin/
