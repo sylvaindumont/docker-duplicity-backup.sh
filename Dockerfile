@@ -29,7 +29,8 @@ RUN adduser -D -u 1896 duplicity \
  && chmod -R go+rw /var/log/duplicity/ \
  && chmod +rx /usr/local/bin/duplicity-backup.sh \
  && chmod +rx /home/duplicity/entrypoint.sh \
- && touch ${HOME}/dulicity-backup.conf
+ && touch ${HOME}/dulicity-backup.conf \
+ && touch /home/duplicity/.megarc
 
 RUN apk add --no-cache --virtual build-deps \
     linux-headers \
