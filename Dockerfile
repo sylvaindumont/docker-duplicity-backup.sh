@@ -2,6 +2,7 @@
 FROM alpine:edge
 
 RUN set -x \
+ && echo http://nl.alpinelinux.org/alpine/edge/testing >> /etc/apk/repositories \
  && apk add --no-cache \
     coreutils \
     ca-certificates \
