@@ -1,10 +1,11 @@
 
-FROM alpine:3.7
+FROM alpine:edge
 
 RUN set -x \
  && apk add --no-cache \
     coreutils \
     ca-certificates \
+    megatools \
     duplicity \
     openssh \
     openssl \
@@ -41,13 +42,11 @@ RUN apk add --no-cache --virtual build-deps \
     fasteners \
     gsutil \
     s3cmd \
-    mega.py \
     python-swiftclient \
     python-keystoneclient \
  && rm -r ~/.cache/pip \
- && apk del build-deps \
- && rm /usr/lib/python2.7/site-packages/mega/mega.pyc \
- && wget -O /usr/lib/python2.7/site-packages/mega/mega.py https://raw.githubusercontent.com/tapionx/mega.py/master/mega/mega.py
+ && apk del build-deps
+
 VOLUME ["/home/duplicity/.cache/duplicity", "/home/duplicity/.gnupg"]
 
 USER duplicity
